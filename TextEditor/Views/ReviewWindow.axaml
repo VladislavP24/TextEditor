@@ -37,6 +37,7 @@
 					 Width="220"
 					 Height="5"
 					 VerticalAlignment="Top"
+					 LostFocus="TextBox_LostFocus"
 					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 		</StackPanel>
 

@@ -7,10 +7,16 @@ namespace TextEditor.Views;
 
 public partial class RedactionWindow : Window
 {
+    private RedactionViewModel redactionViewModel { get; set; }
     public RedactionWindow()
     {
         InitializeComponent();
 
-        DataContext = new RedactionViewModel(this);
+        redactionViewModel = new RedactionViewModel(this);
+        DataContext = redactionViewModel;
     }
+
+
+    public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => redactionViewModel.DataFilling();
+
 }

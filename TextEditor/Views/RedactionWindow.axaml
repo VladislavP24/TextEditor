@@ -47,6 +47,7 @@
 			<TextBox Text="{Binding TextFile.Name, Mode=TwoWay}"
 					 Width="220"
 					 Height="5"
+					 LostFocus="TextBox_LostFocus"
 					 VerticalAlignment="Top"
 					 HorizontalAlignment="Right"
 					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>

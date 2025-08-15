@@ -47,7 +47,7 @@ namespace TextEditor.ViewModels
         private TextFile _textFile;
 
 
-        private void DataFilling()
+        public void DataFilling()
         {
             if (!Path.EndsWith(".txt") || !File.Exists(Path))
             {
