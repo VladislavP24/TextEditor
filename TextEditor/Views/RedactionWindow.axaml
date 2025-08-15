@@ -31,71 +31,71 @@
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal">
 			<TextBlock Text="Введите путь:"
-				   Foreground="Black"
-				   Margin="60,5,63,0"/>
+					   Foreground="Black"
+				       Margin="60,5,63,0"/>
 			<TextBox Text="{Binding Path}"
-				 Width="220"
-				 Height="5"
-				 VerticalAlignment="Top"
-				 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+					 Width="220"
+					 Height="5"
+					 VerticalAlignment="Top"
+					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
 			<TextBlock Text="Имя файла:"
-				   Foreground="Black"
-				   Margin="60,5,80,0"/>
+					   Foreground="Black"
+					   Margin="60,5,80,0"/>
 			<TextBox Text="{Binding TextFile.Name, Mode=TwoWay}"
-				 Width="220"
-				 Height="5"
-				 VerticalAlignment="Top"
-				 HorizontalAlignment="Right"
-				 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+					 Width="220"
+					 Height="5"
+					 VerticalAlignment="Top"
+					 HorizontalAlignment="Right"
+					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="3" Orientation="Horizontal">
 			<TextBlock Text="Дата создания: "
-				   Foreground="Black"
-				   Margin="60,5,50,0"/>
+					   Foreground="Black"
+					   Margin="60,5,50,0"/>
 			<TextBox Text="{Binding TextFile.CreateDate, Mode=OneWay}"
-				 Width="220"
-				 Height="5"
-				 IsReadOnly="True"
-				 VerticalAlignment="Top"
-				   HorizontalAlignment="Right"/>
+					 Width="220"
+					 Height="5"
+					 IsReadOnly="True"
+					 VerticalAlignment="Top"
+				     HorizontalAlignment="Right"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="4" Orientation="Vertical">
 			<TextBlock Text="Содержание файла:"
-				   Foreground="Black"
-				   Margin="60,5,63,0"/>
+					   Foreground="Black"
+					   Margin="60,5,63,0"/>
 			<TextBox Text="{Binding TextFile.Text, Mode=TwoWay}"
-				   Width="380"
-				 Height="200"
-				 VerticalAlignment="Top"
-				 Margin="0,10,0,0"
-				 ScrollViewer.VerticalScrollBarVisibility="Auto"
-				 TextWrapping="Wrap"
-				 AcceptsReturn="True"/>
+				     Width="380"
+					 Height="200"
+					 VerticalAlignment="Top"
+					 Margin="0,10,0,0"
+					 ScrollViewer.VerticalScrollBarVisibility="Auto"
+					 TextWrapping="Wrap"
+					 AcceptsReturn="True"/>
 		</StackPanel>
 
 		<Grid Grid.Row="5">
 			<Button Content="Сохранить"
-				Command="{Binding SaveCommand}"
-				Background="Green"
-				Margin="60,50,0,0"
-				Height="30" Width="100"
-				HorizontalContentAlignment="Center"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Center"/>
+					Command="{Binding SaveCommand}"
+					Background="Green"
+					Margin="60,50,0,0"
+					Height="30" Width="100"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"/>
 
 			<Button Content="Выйти"
-				Command="{Binding ExitCommand}"
-				Background="Green"
-				Margin="0,50,60,0"
-				Height="30" Width="100"
-				HorizontalContentAlignment="Center"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Center"/>
+					Command="{Binding ExitCommand}"
+					Background="Green"
+					Margin="0,50,60,0"
+					Height="30" Width="100"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"/>
 		</Grid>
 	</Grid>
 </Window>
