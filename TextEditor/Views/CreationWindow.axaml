@@ -1,0 +1,88 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+		d:DesignWidth="500" d:DesignHeight="500"
+		Width="500" Height="500"
+		MaxWidth="500" MaxHeight="500"
+		MinWidth="500" MinHeight="500"
+		xmlns:vm="using:TextEditor.ViewModels"
+        x:Class="TextEditor.Views.CreationWindow"
+		x:DataType="vm:CreationViewModel"
+        Title="TextEditor">
+	
+	<Grid Background="White">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="0.5*" />
+			<RowDefinition Height="0.5*" />
+			<RowDefinition Height="2*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0"
+				   Text="{Binding Info}"
+				   FontSize="26"
+				   Foreground="Black"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"/>
+
+		<StackPanel Grid.Row="1" Orientation="Horizontal">
+			<TextBlock Text="Введите имя файла:" 
+					   Foreground="Black"
+					   Margin="60,5,20,0"/>
+			<TextBox Text="{Binding TextFile.Name}"
+					 Width="220" 
+					 Height="5" 
+					 VerticalAlignment="Top"
+					 HorizontalAlignment="Right"
+					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+		</StackPanel>
+		
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<TextBlock Text="Введите путь:"
+					   Foreground="Black"
+					   Margin="60,5,63,0"/>
+			<TextBox Text="{Binding TextFile.Path}"
+					 Width="220" 
+					 Height="5" 
+					 VerticalAlignment="Top"
+					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+		</StackPanel>
+		
+		<StackPanel Grid.Row="3" Orientation="Vertical">
+			<TextBlock Text="Введите Текст:"
+					   Foreground="Black"
+					   Margin="60,5,63,0"/>
+			<TextBox Text="{Binding TextFile.Text}"
+				     Width="380" 
+					 Height="200" 
+					 VerticalAlignment="Top"
+					 Margin="0,10,0,0"
+					 ScrollViewer.VerticalScrollBarVisibility="Auto"
+					 TextWrapping="Wrap"
+					 AcceptsReturn="True"/>
+		</StackPanel>
+
+		<Grid Grid.Row="4">
+			<Button Content="Сохранить"
+					Command="{Binding SaveCommand}"
+					Background="Green"
+					Margin="60,30,0,0"
+					Height="30" Width="100"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"/>
+			
+			<Button Content="Выйти"
+					Command="{Binding ExitCommand}"
+					Background="Green"
+					Margin="0,30,60,0"
+					Height="30" Width="100"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"/>
+		</Grid>
+	</Grid>
+</Window>
