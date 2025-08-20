@@ -12,6 +12,11 @@
 		x:DataType="vm:InfoViewModel"
         Title="TextEditor">
 
+	<Window.Styles>
+		<StyleInclude Source="/Styles/ButtonsStyles.axaml"/>
+	</Window.Styles>
+	
+	
 	<Grid Background="White">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30" />
@@ -38,11 +43,11 @@
 		<Button Grid.Row="2"
 			    Content="Ок"
 				Command="{Binding ExitCommand}"
-				Background="Green"
 				Height="30" Width="100"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Bottom"
-				Margin="0,0,0,15"/>
+				Margin="0,0,0,15"
+				Classes="CustomButtonStyle"/>
 	</Grid>
 </Window>

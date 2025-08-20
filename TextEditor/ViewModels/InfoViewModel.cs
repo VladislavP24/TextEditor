@@ -63,6 +63,8 @@ namespace TextEditor.ViewModels
                     break;
             }
         }
+
+        public Task Choice() => throw new NotImplementedException();
     }
 
 

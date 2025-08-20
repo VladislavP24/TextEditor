@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using ReactiveUI;
 using TextEditor.Interfaces;
 using TextEditor.Models;
@@ -15,11 +18,17 @@ namespace TextEditor.ViewModels
     {
         public ReviewViewModel(ReviewWindow reviewWindow)
         {
+            ExitCommand = ReactiveCommand.Create(Exit);
+            ChoiceCommand = ReactiveCommand.Create(Choice);
+
             _reviewWindow = reviewWindow;
             TextFile = new TextFile();
         }
 
         private readonly ReviewWindow _reviewWindow;
+
+        public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
 
         public string Info
         {
@@ -49,6 +58,9 @@ namespace TextEditor.ViewModels
 
         public void DataFilling()
         {
+            if (Path == null)
+                return;
+
             if (!Path.EndsWith(".txt") || !File.Exists(Path))
             {
                 ShowMessage(_reviewWindow, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
@@ -66,5 +78,24 @@ namespace TextEditor.ViewModels
         public void Exit() => _reviewWindow.Close();
 
         public void Save() => throw new NotImplementedException();
+
+        public async Task Choice()
+        {
+            var topLevel = TopLevel.GetTopLevel(_reviewWindow);
+            if (topLevel is null) return;
+
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Выбор текстового файла",
+                AllowMultiple = false,
+                FileTypeFilter = new[] { new FilePickerFileType("Text Files") { Patterns = new[] { "*.txt", "*.text" } } }
+            });
+
+            if (files.Count > 0)
+            {
+                Path = files[0].TryGetLocalPath();
+                DataFilling();
+            }
+        }
     }
 }

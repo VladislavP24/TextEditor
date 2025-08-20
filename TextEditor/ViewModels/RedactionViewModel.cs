@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using ReactiveUI;
 using TextEditor.Interfaces;
 using TextEditor.Models;
@@ -18,6 +20,7 @@ namespace TextEditor.ViewModels
         {
             SaveCommand = ReactiveCommand.Create(Save);
             ExitCommand = ReactiveCommand.Create(Exit);
+            ChoiceCommand = ReactiveCommand.Create(Choice);
 
             _redactionWindow = redactionWindow;
             TextFile = new TextFile();
@@ -52,10 +55,13 @@ namespace TextEditor.ViewModels
 
         public ReactiveCommand<Unit, Unit> SaveCommand { get; }
         public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
 
 
         public void DataFilling()
        {
+            if (Path is null) return;
+
             if (!Path.EndsWith(".txt") || !File.Exists(Path))
             {
                 ShowMessage(_redactionWindow, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
@@ -72,7 +78,7 @@ namespace TextEditor.ViewModels
 
         public void Save()
         {
-            if (!File.Exists(Path) || Path == null)
+            if (!File.Exists(Path) || Path is null)
             {
                 ShowMessage(_redactionWindow, AlertEnum.Warning, "Путь к файлу не найден. Также был удалён сам файл, который Вы отредактировали!");
                 return;
@@ -94,5 +100,24 @@ namespace TextEditor.ViewModels
         }
 
         public void Exit() => _redactionWindow.Close();
+
+        public async Task Choice()
+        {
+            var topLevel = TopLevel.GetTopLevel(_redactionWindow);
+            if (topLevel is null) return;
+
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Выбор текстового файла",
+                AllowMultiple = false,
+                FileTypeFilter = new[] { new FilePickerFileType("Text Files") { Patterns = new[] { "*.txt", "*.text" } } }                                     
+            });
+
+            if (files.Count > 0)
+            {
+                Path = files[0].TryGetLocalPath();
+                DataFilling();
+            }
+        }
     }
 }

@@ -7,11 +7,12 @@
 			 xmlns:vm="using:TextEditor.ViewModels"
 			 x:DataType="vm:MainViewModel">
 	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainViewModel />
+		<vm:MainViewModel/>
 	</Design.DataContext>
 
+	<UserControl.Styles>
+		<StyleInclude Source="/Styles/ButtonsStyles.axaml"/>
+	</UserControl.Styles>
 
 	<Grid >
 		<Grid.RowDefinitions>
@@ -31,43 +32,42 @@
 				   Foreground="Black"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center"/>
-
 		</StackPanel>
 
 		<Button Grid.Row="1"
 				Content="Создание"
 				Command="{Binding CreationCommand}"
 				Height="30" Width="150"
-				Background="Green"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"/>
+				VerticalAlignment="Center"
+				Classes="CustomButtonStyle"/>
 
 		<Button Grid.Row="2"
 				Content="Редактирование"
 				Command="{Binding RedactionCommand}"
 				Height="30" Width="150"
-				Background="Green"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"/>
+				VerticalAlignment="Center"
+				Classes="CustomButtonStyle"/>
 
 		<Button Grid.Row="3"
 				Content="Просмотр"
 				Command="{Binding ReviewCommand}"
 				Height="30" Width="150"
-				Background="Green"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"/>
+				VerticalAlignment="Center"
+				Classes="CustomButtonStyle"/>
 
 		<Button Grid.Row="4"
 				Content="Выйти"
 				Command="{Binding ExitCommand}"
-				Background="Green"
 				Height="30" Width="150"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"/>
+				VerticalAlignment="Center"
+				Classes="CustomButtonStyle"/>
 	</Grid>
 </UserControl>

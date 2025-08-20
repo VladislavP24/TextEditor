@@ -12,6 +12,11 @@
 		x:DataType="vm:ReviewViewModel"
         Title="TextEditor">
 
+	<Window.Styles>
+		<StyleInclude Source="/Styles/ButtonsStyles.axaml"/>
+	</Window.Styles>
+	
+	
 	<Grid Background="White">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
@@ -34,11 +39,16 @@
 					   Foreground="Black"
 					   Margin="60,5,63,0"/>
 			<TextBox Text="{Binding Path}"
-					 Width="220"
+					 Width="190"
 					 Height="5"
 					 VerticalAlignment="Top"
 					 LostFocus="TextBox_LostFocus"
 					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+			<Button Content="..."
+					Command="{Binding ChoiceCommand}"
+					Height="32" Width="30"
+					VerticalAlignment="Top"
+					Classes="CustomButtonStyle"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
@@ -84,12 +94,12 @@
 		<Grid Grid.Row="5">
 			<Button Content="Выйти"
 					Command="{Binding ExitCommand}"
-					Background="Green"
 					Height="30" Width="100"
 					HorizontalContentAlignment="Center"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Bottom"
-					Margin="0,0,0,15"/>
+					Margin="0,0,0,15"
+					Classes="CustomButtonStyle"/>
 		</Grid>
 	</Grid>
 </Window>

@@ -13,5 +13,6 @@ namespace TextEditor.Interfaces
         TextFile TextFile { get; set; }
         void Save();
         void Exit();
+        Task Choice();
     }
 }

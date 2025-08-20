@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using ReactiveUI;
 using TextEditor.Interfaces;
 using TextEditor.Models;
@@ -18,6 +20,8 @@ namespace TextEditor.ViewModels
         {
             SaveCommand = ReactiveCommand.Create(Save);
             ExitCommand = ReactiveCommand.Create(Exit);
+            ChoiceCommand = ReactiveCommand.Create(Choice);
+
 
             _creationWindow = creationWindow;
             TextFile = new TextFile();
@@ -41,6 +45,7 @@ namespace TextEditor.ViewModels
 
         public ReactiveCommand<Unit, Unit> SaveCommand { get; }
         public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
 
         public void Save()
         {
@@ -65,5 +70,20 @@ namespace TextEditor.ViewModels
         }
 
         public void Exit() => _creationWindow.Close();
+
+        public async Task Choice()
+        {
+            var topLevel = TopLevel.GetTopLevel(_creationWindow);
+            if (topLevel is null) return;
+
+            var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            {
+                Title = "Выбор папки для сохранения",
+                AllowMultiple = false
+            });
+
+            if (folders.Count > 0)
+                TextFile.Path = folders[0].TryGetLocalPath();
+        }
     }
 }

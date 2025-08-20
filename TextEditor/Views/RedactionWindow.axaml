@@ -3,14 +3,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-    d:DesignWidth="500" d:DesignHeight="530"
-    Width="500" Height="530"
-    MaxWidth="500" MaxHeight="530"
-    MinWidth="500" MinHeight="530"
-    xmlns:vm="using:TextEditor.ViewModels"
+		d:DesignWidth="500" d:DesignHeight="530"
+		Width="500" Height="530"
+		MaxWidth="500" MaxHeight="530"
+		MinWidth="500" MinHeight="530"
+		xmlns:vm="using:TextEditor.ViewModels"
         x:Class="TextEditor.Views.RedactionWindow"
-    x:DataType="vm:RedactionViewModel"
+		x:DataType="vm:RedactionViewModel"
         Title="TextEditor">
+
+	<Window.Styles>
+		<StyleInclude Source="/Styles/ButtonsStyles.axaml"/>
+	</Window.Styles>
 
 	<Grid Background="White">
 		<Grid.RowDefinitions>
@@ -34,10 +38,16 @@
 					   Foreground="Black"
 				       Margin="60,5,63,0"/>
 			<TextBox Text="{Binding Path}"
-					 Width="220"
+					 Width="190"
 					 Height="5"
+					 LostFocus="TextBox_LostFocus"
 					 VerticalAlignment="Top"
 					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+			<Button Content="..."
+					Command="{Binding ChoiceCommand}"
+					Height="32" Width="30"
+					VerticalAlignment="Top"
+					Classes="CustomButtonStyle"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="2" Orientation="Horizontal">
@@ -46,8 +56,7 @@
 					   Margin="60,5,80,0"/>
 			<TextBox Text="{Binding TextFile.Name, Mode=TwoWay}"
 					 Width="220"
-					 Height="5"
-					 LostFocus="TextBox_LostFocus"
+					 Height="5" 
 					 VerticalAlignment="Top"
 					 HorizontalAlignment="Right"
 					 ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
@@ -87,7 +96,8 @@
 					Height="30" Width="100"
 					HorizontalContentAlignment="Center"
 					HorizontalAlignment="Left"
-					VerticalAlignment="Center"/>
+					VerticalAlignment="Center"
+					Classes="CustomButtonStyle"/>
 
 			<Button Content="Выйти"
 					Command="{Binding ExitCommand}"
@@ -96,7 +106,8 @@
 					Height="30" Width="100"
 					HorizontalContentAlignment="Center"
 					HorizontalAlignment="Right"
-					VerticalAlignment="Center"/>
+					VerticalAlignment="Center"
+					Classes="CustomButtonStyle"/>
 		</Grid>
 	</Grid>
 </Window>

@@ -12,7 +12,8 @@ public partial class ReviewWindow : Window
     {
         InitializeComponent();
 
-        DataContext = new ReviewViewModel(this);
+        reviewViewModel = new ReviewViewModel(this);
+        DataContext = reviewViewModel;
     }
 
     public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => reviewViewModel.DataFilling();
