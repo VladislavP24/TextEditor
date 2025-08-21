@@ -20,5 +20,9 @@ class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace()
-            .UseReactiveUI();
+            .UseReactiveUI()
+            .With(new X11PlatformOptions
+            {
+                UseDBusFilePicker = false // to disable FreeDesktop file picker
+            });
 }

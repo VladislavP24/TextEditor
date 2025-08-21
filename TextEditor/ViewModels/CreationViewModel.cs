@@ -57,7 +57,8 @@ namespace TextEditor.ViewModels
 
             try
             {
-                File.WriteAllText(TextFile.Path + '\\' + TextFile.Name + ".txt", TextFile.Text);
+                string filePath = Path.Combine(TextFile.Path, TextFile.Name + ".txt");
+                File.WriteAllText(filePath, TextFile.Text);
                 ShowMessage(_creationWindow, AlertEnum.Info, "Файл успешно создан!");
             }
             catch(Exception ex)

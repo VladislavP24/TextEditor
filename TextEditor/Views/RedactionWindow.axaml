@@ -37,7 +37,7 @@
 			<TextBlock Text="Введите путь:"
 					   Foreground="Black"
 				       Margin="60,5,63,0"/>
-			<TextBox Text="{Binding Path}"
+			<TextBox Text="{Binding PathFile}"
 					 Width="190"
 					 Height="5"
 					 LostFocus="TextBox_LostFocus"

@@ -35,16 +35,16 @@ namespace TextEditor.ViewModels
         }
         private string _info = "Изменение текстового файла";
 
-        public string Path
+        public string PathFile
         {
-            get => _path;
+            get => _pathFile;
             set
             {
-                this.RaiseAndSetIfChanged(ref _path, value);
+                this.RaiseAndSetIfChanged(ref _pathFile, value);
                // DataFilling();
             }
         }
-        private string _path;
+        private string _pathFile;
 
         public TextFile TextFile
         {
@@ -60,25 +60,25 @@ namespace TextEditor.ViewModels
 
         public void DataFilling()
        {
-            if (Path is null) return;
+            if (PathFile is null) return;
 
-            if (!Path.EndsWith(".txt") || !File.Exists(Path))
+            if (!PathFile.EndsWith(".txt") || !File.Exists(PathFile))
             {
                 ShowMessage(_redactionWindow, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
                 return;
             }    
 
-            FileInfo fileInfo = new FileInfo(Path);
+            FileInfo fileInfo = new FileInfo(PathFile);
 
             TextFile.Name = fileInfo.Name.Replace(".txt", "");
             TextFile.CreateDate = fileInfo.CreationTime;
             TextFile.Path = fileInfo.DirectoryName;
-            TextFile.Text = File.ReadAllText(Path);
+            TextFile.Text = File.ReadAllText(PathFile);
         }
 
         public void Save()
         {
-            if (!File.Exists(Path) || Path is null)
+            if (!File.Exists(PathFile) || PathFile is null)
             {
                 ShowMessage(_redactionWindow, AlertEnum.Warning, "Путь к файлу не найден. Также был удалён сам файл, который Вы отредактировали!");
                 return;
@@ -86,8 +86,9 @@ namespace TextEditor.ViewModels
 
             try
             {
-                File.Delete(Path);
-                File.WriteAllText(TextFile.Path + '\\' + TextFile.Name + ".txt", TextFile.Text);
+                File.Delete(PathFile);
+                string filePath = Path.Combine(TextFile.Path, TextFile.Name + ".txt");
+                File.WriteAllText(filePath, TextFile.Text);
                 ShowMessage(_redactionWindow, AlertEnum.Info, "Файл успешно отредактирован!");
             }
             catch (Exception ex)
@@ -115,7 +116,7 @@ namespace TextEditor.ViewModels
 
             if (files.Count > 0)
             {
-                Path = files[0].TryGetLocalPath();
+                PathFile = files[0].TryGetLocalPath();
                 DataFilling();
             }
         }
