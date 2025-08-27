@@ -16,6 +16,6 @@ public partial class InfoWindow : Window
     {
         InitializeComponent();
 
-        DataContext = new InfoViewModel(this, alert, message);
+        DataContext = new InfoViewModel(alert, message);
     }
 }

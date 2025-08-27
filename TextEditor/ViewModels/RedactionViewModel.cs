@@ -16,17 +16,14 @@ namespace TextEditor.ViewModels
 {
     public class RedactionViewModel : ViewModelBase, IContentWindow
     {
-        public RedactionViewModel(RedactionWindow redactionWindow)
+        public RedactionViewModel()
         {
-            SaveCommand = ReactiveCommand.Create(Save);
-            ExitCommand = ReactiveCommand.Create(Exit);
-            ChoiceCommand = ReactiveCommand.Create(Choice);
+            SaveCommand = ReactiveCommand.Create<Window>(Save);
+            ExitCommand = ReactiveCommand.Create<Window>(Exit);
+            ChoiceCommand = ReactiveCommand.Create<Window, Task>(Choice);
 
-            _redactionWindow = redactionWindow;
             TextFile = new TextFile();
         }
-
-        private RedactionWindow _redactionWindow;
 
         public string Info
         {
@@ -53,18 +50,18 @@ namespace TextEditor.ViewModels
         }
         private TextFile _textFile;
 
-        public ReactiveCommand<Unit, Unit> SaveCommand { get; }
-        public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
+        public ReactiveCommand<Window, Unit> SaveCommand { get; }
+        public ReactiveCommand<Window, Unit> ExitCommand { get; }
+        public ReactiveCommand<Window, Task> ChoiceCommand { get; }
 
 
-        public void DataFilling()
+        public void DataFilling(Window window)
        {
             if (PathFile is null) return;
 
             if (!PathFile.EndsWith(".txt") || !File.Exists(PathFile))
             {
-                ShowMessage(_redactionWindow, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
+                ShowMessage(window, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
                 return;
             }    
 
@@ -76,11 +73,11 @@ namespace TextEditor.ViewModels
             TextFile.Text = File.ReadAllText(PathFile);
         }
 
-        public void Save()
+        public void Save(Window window)
         {
             if (!File.Exists(PathFile) || PathFile is null)
             {
-                ShowMessage(_redactionWindow, AlertEnum.Warning, "Путь к файлу не найден. Также был удалён сам файл, который Вы отредактировали!");
+                ShowMessage(window, AlertEnum.Warning, "Путь к файлу не найден. Также был удалён сам файл, который Вы отредактировали!");
                 return;
             }
 
@@ -89,22 +86,22 @@ namespace TextEditor.ViewModels
                 File.Delete(PathFile);
                 string filePath = Path.Combine(TextFile.Path, TextFile.Name + ".txt");
                 File.WriteAllText(filePath, TextFile.Text);
-                ShowMessage(_redactionWindow, AlertEnum.Info, "Файл успешно отредактирован!");
+                ShowMessage(window, AlertEnum.Info, "Файл успешно отредактирован!");
             }
             catch (Exception ex)
             {
-                ShowMessage(_redactionWindow, AlertEnum.Error, ex.ToString());
+                ShowMessage(window, AlertEnum.Error, ex.ToString());
                 return;
             }
 
-            Exit();
+            Exit(window);
         }
 
-        public void Exit() => _redactionWindow.Close();
+        public void Exit(Window window) => window.Close();
 
-        public async Task Choice()
+        public async Task Choice(Window window)
         {
-            var topLevel = TopLevel.GetTopLevel(_redactionWindow);
+            var topLevel = TopLevel.GetTopLevel(window);
             if (topLevel is null) return;
 
             var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
@@ -117,7 +114,7 @@ namespace TextEditor.ViewModels
             if (files.Count > 0)
             {
                 PathFile = files[0].TryGetLocalPath();
-                DataFilling();
+                DataFilling(window);
             }
         }
     }

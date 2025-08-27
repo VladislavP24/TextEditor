@@ -16,19 +16,17 @@ namespace TextEditor.ViewModels
 {
     public class ReviewViewModel : ViewModelBase, IContentWindow
     {
-        public ReviewViewModel(ReviewWindow reviewWindow)
+        public ReviewViewModel()
         {
-            ExitCommand = ReactiveCommand.Create(Exit);
-            ChoiceCommand = ReactiveCommand.Create(Choice);
+            ExitCommand = ReactiveCommand.Create<Window>(Exit);
+            ChoiceCommand = ReactiveCommand.Create<Window, Task>(Choice);
 
-            _reviewWindow = reviewWindow;
             TextFile = new TextFile();
         }
 
-        private readonly ReviewWindow _reviewWindow;
 
-        public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
+        public ReactiveCommand<Window, Unit> ExitCommand { get; }
+        public ReactiveCommand<Window, Task> ChoiceCommand { get; }
 
         public string Info
         {
@@ -43,7 +41,7 @@ namespace TextEditor.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _path, value);
-                DataFilling();
+                //DataFilling();
             }
         }
         private string _path;
@@ -56,14 +54,14 @@ namespace TextEditor.ViewModels
         private TextFile _textFile;
 
 
-        public void DataFilling()
+        public void DataFilling(Window window)
         {
             if (Path == null)
                 return;
 
             if (!Path.EndsWith(".txt") || !File.Exists(Path))
             {
-                ShowMessage(_reviewWindow, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
+                ShowMessage(window, AlertEnum.Warning, "По пути, указанный Вами, ничего не найдено. Также может быть не правильно указан файл с данным расширением!");
                 return;
             }
 
@@ -75,13 +73,13 @@ namespace TextEditor.ViewModels
             TextFile.Text = File.ReadAllText(Path);
         }
 
-        public void Exit() => _reviewWindow.Close();
+        public void Exit(Window window) => window.Close();
 
-        public void Save() => throw new NotImplementedException();
+        public void Save(Window window) => throw new NotImplementedException();
 
-        public async Task Choice()
+        public async Task Choice(Window window)
         {
-            var topLevel = TopLevel.GetTopLevel(_reviewWindow);
+            var topLevel = TopLevel.GetTopLevel(window);
             if (topLevel is null) return;
 
             var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
@@ -94,7 +92,7 @@ namespace TextEditor.ViewModels
             if (files.Count > 0)
             {
                 Path = files[0].TryGetLocalPath();
-                DataFilling();
+                DataFilling(window);
             }
         }
     }

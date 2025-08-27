@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor", "TextEditor\TextEditor.csproj", "{A0D35C36-2101-9299-1D27-1E9506F1CB1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.Desktop", "TextEditor.Desktop\TextEditor.Desktop.csproj", "{26727A6C-3652-9509-7BB0-7945424FBC58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.Tests", "TextEditor.Tests\TextEditor.Tests.csproj", "{057116BC-6211-4EA9-99E4-8EB60405A475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{26727A6C-3652-9509-7BB0-7945424FBC58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26727A6C-3652-9509-7BB0-7945424FBC58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26727A6C-3652-9509-7BB0-7945424FBC58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057116BC-6211-4EA9-99E4-8EB60405A475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057116BC-6211-4EA9-99E4-8EB60405A475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057116BC-6211-4EA9-99E4-8EB60405A475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057116BC-6211-4EA9-99E4-8EB60405A475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

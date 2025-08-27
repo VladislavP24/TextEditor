@@ -12,11 +12,11 @@ public partial class RedactionWindow : Window
     {
         InitializeComponent();
 
-        redactionViewModel = new RedactionViewModel(this);
+        redactionViewModel = new RedactionViewModel();
         DataContext = redactionViewModel;
     }
 
 
-    public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => redactionViewModel.DataFilling();
+    public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => redactionViewModel.DataFilling(this);
 
 }

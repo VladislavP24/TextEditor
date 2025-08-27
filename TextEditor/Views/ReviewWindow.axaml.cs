@@ -12,9 +12,9 @@ public partial class ReviewWindow : Window
     {
         InitializeComponent();
 
-        reviewViewModel = new ReviewViewModel(this);
+        reviewViewModel = new ReviewViewModel();
         DataContext = reviewViewModel;
     }
 
-    public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => reviewViewModel.DataFilling();
+    public void TextBox_LostFocus(object sender, Avalonia.Interactivity.RoutedEventArgs e) => reviewViewModel.DataFilling(this);
 }

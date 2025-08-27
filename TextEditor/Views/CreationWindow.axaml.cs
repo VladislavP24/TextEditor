@@ -11,6 +11,6 @@ public partial class CreationWindow : Window
     {
         InitializeComponent();
 
-        DataContext = new CreationViewModel(this);
+        DataContext = new CreationViewModel();
     }
 }

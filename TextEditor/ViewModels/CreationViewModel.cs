@@ -16,18 +16,13 @@ namespace TextEditor.ViewModels
 {
     public class CreationViewModel : ViewModelBase, IContentWindow
     {
-        public CreationViewModel(CreationWindow creationWindow) 
+        public CreationViewModel() 
         {
-            SaveCommand = ReactiveCommand.Create(Save);
-            ExitCommand = ReactiveCommand.Create(Exit);
-            ChoiceCommand = ReactiveCommand.Create(Choice);
-
-
-            _creationWindow = creationWindow;
+            SaveCommand = ReactiveCommand.Create<Window>(Save);
+            ExitCommand = ReactiveCommand.Create<Window>(Exit);
+            ChoiceCommand = ReactiveCommand.Create<Window, Task>(Choice);
             TextFile = new TextFile();
         }
-
-        private CreationWindow _creationWindow;
 
         public string Info
         {
@@ -43,15 +38,15 @@ namespace TextEditor.ViewModels
         }
         private TextFile _textFile;
 
-        public ReactiveCommand<Unit, Unit> SaveCommand { get; }
-        public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-        public ReactiveCommand<Unit, Task> ChoiceCommand { get; }
+        public ReactiveCommand<Window, Unit> SaveCommand { get; }
+        public ReactiveCommand<Window, Unit> ExitCommand { get; }
+        public ReactiveCommand<Window, Task> ChoiceCommand { get; }
 
-        public void Save()
+        public void Save(Window window)
         {
             if (TextFile.Path == null || TextFile.Name == null)
             {
-                ShowMessage(_creationWindow, AlertEnum.Warning, "Провести сохрание невозможно. Не заполнен параметр пути или имя файла.");
+                ShowMessage(window, AlertEnum.Warning, "Провести сохрание невозможно. Не заполнен параметр пути или имя файла.");
                 return;
             }
 
@@ -59,22 +54,22 @@ namespace TextEditor.ViewModels
             {
                 string filePath = Path.Combine(TextFile.Path, TextFile.Name + ".txt");
                 File.WriteAllText(filePath, TextFile.Text);
-                ShowMessage(_creationWindow, AlertEnum.Info, "Файл успешно создан!");
+                ShowMessage(window, AlertEnum.Info, "Файл успешно создан!");
             }
             catch(Exception ex)
             {
-                ShowMessage(_creationWindow, AlertEnum.Error, ex.ToString());
+                ShowMessage(window, AlertEnum.Error, ex.ToString());
                 return;
             }
             
-            Exit();
+            Exit(window);
         }
 
-        public void Exit() => _creationWindow.Close();
+        public void Exit(Window window) => window.Close();
 
-        public async Task Choice()
+        public async Task Choice(Window window)
         {
-            var topLevel = TopLevel.GetTopLevel(_creationWindow);
+            var topLevel = TopLevel.GetTopLevel(window);
             if (topLevel is null) return;
 
             var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions

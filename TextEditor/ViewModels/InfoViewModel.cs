@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using ReactiveUI;
 using TextEditor.Interfaces;
 using TextEditor.Models;
@@ -13,17 +14,15 @@ namespace TextEditor.ViewModels
 {
     public class InfoViewModel : ViewModelBase, IContentWindow
     {
-        public InfoViewModel(InfoWindow infoWindow, AlertEnum alert, string message)
+        public InfoViewModel(AlertEnum alert, string message)
         {
-            ExitCommand = ReactiveCommand.Create(Exit);
-            _infoWindow = infoWindow;
+            ExitCommand = ReactiveCommand.Create<Window>(Exit);
             _message = message;
             TypeAlertDefinition(alert);
         }
 
-        private readonly InfoWindow _infoWindow;
         public TextFile TextFile { get; set; }
-        public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+        public ReactiveCommand<Window, Unit> ExitCommand { get; }
 
         public string Message
         {
@@ -39,9 +38,9 @@ namespace TextEditor.ViewModels
         }
         private string _info;
 
-        public void Exit() => _infoWindow.Close();
+        public void Exit(Window window) => window.Close();
 
-        public void Save() => throw new NotImplementedException();
+        public void Save(Window window) => throw new NotImplementedException();
 
         public void TypeAlertDefinition(AlertEnum alert)
         {
@@ -64,7 +63,7 @@ namespace TextEditor.ViewModels
             }
         }
 
-        public Task Choice() => throw new NotImplementedException();
+        public Task Choice(Window window) => throw new NotImplementedException();
     }
 
 

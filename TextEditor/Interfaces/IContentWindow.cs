@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using TextEditor.Models;
 
 namespace TextEditor.Interfaces
@@ -11,8 +12,8 @@ namespace TextEditor.Interfaces
     {
         string Info { get; set; }
         TextFile TextFile { get; set; }
-        void Save();
-        void Exit();
-        Task Choice();
+        void Save(Window window);
+        void Exit(Window window);
+        Task Choice(Window window);
     }
 }

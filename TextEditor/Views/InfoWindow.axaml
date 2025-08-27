@@ -43,6 +43,7 @@
 		<Button Grid.Row="2"
 			    Content="Ок"
 				Command="{Binding ExitCommand}"
+				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
 				Height="30" Width="100"
 				HorizontalContentAlignment="Center"
 				HorizontalAlignment="Center"
