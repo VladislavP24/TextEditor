@@ -55,7 +55,7 @@ namespace TextEditor.Tests
         }
 
         [AvaloniaFact]
-        public void Save_FullData_CloseWindow()
+        public void Save_AllData_CloseWindow()
         {
             // Arrange
             var creationWindow = new CreationWindow();
@@ -71,6 +71,23 @@ namespace TextEditor.Tests
 
             //Assert
             Assert.False(creationWindow.IsVisible);
+        }
+
+
+        [AvaloniaFact]
+        public async Task Choice_TopLevelIsNull_DoesNotThrow()
+        {
+            // Arrange
+            var creationWindow = new CreationWindow();
+            var creationViewModel = new CreationViewModel();
+            creationWindow.DataContext = creationViewModel;
+            creationWindow.Show();
+
+            //Act
+            await creationViewModel.Choice(null);
+
+            //Assert
+            Assert.True(true);
         }
     }
 }
