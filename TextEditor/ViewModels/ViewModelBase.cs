@@ -6,13 +6,13 @@ namespace TextEditor.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {
-    protected void ShowMessage(Window window, AlertEnum alertType, string message)
+    public void ShowMessage(Window window, AlertEnum alertType, string message)
     {
-        InfoWindow infoWindow = new InfoWindow(alertType, message);
+        InfoWindow infoWindow = new InfoWindow();
 
         if (alertType == AlertEnum.Info)
-            infoWindow.Show();
+            infoWindow.ShowWindow(alertType, message);
         else
-            infoWindow.ShowDialog(window);
+            infoWindow.ShowWindow(alertType, message, window);
     }
 }

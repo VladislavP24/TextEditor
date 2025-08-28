@@ -50,10 +50,7 @@ public class MainViewModel : ViewModelBase
         window.Show();
     }
 
-    private void Exit()
-    {
-        GetWindow().Close();
-    }
+    private void Exit() => GetWindow().Close();
 
     private Window GetWindow() => ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow;
 }

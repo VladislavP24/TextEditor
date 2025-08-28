@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -7,15 +8,22 @@ namespace TextEditor.Views;
 
 public partial class InfoWindow : Window
 {
+    private readonly InfoViewModel _infoViewModel;
     public InfoWindow()
     {
         InitializeComponent();
+
+        _infoViewModel = new InfoViewModel();
+        DataContext = _infoViewModel;
     }
 
-    public InfoWindow(AlertEnum alert, string message)
+    internal void ShowWindow(AlertEnum alertType, string message, Window window = null)
     {
-        InitializeComponent();
+        _infoViewModel.WindowDataFilling(alertType, message);
 
-        DataContext = new InfoViewModel(alert, message);
+        if (window == null) 
+            this.Show();
+        else
+            this.ShowDialog(window);
     }
 }

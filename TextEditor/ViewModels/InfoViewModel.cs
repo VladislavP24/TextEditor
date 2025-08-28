@@ -14,11 +14,9 @@ namespace TextEditor.ViewModels
 {
     public class InfoViewModel : ViewModelBase, IContentWindow
     {
-        public InfoViewModel(AlertEnum alert, string message)
+        public InfoViewModel()
         {
             ExitCommand = ReactiveCommand.Create<Window>(Exit);
-            _message = message;
-            TypeAlertDefinition(alert);
         }
 
         public TextFile TextFile { get; set; }
@@ -42,8 +40,10 @@ namespace TextEditor.ViewModels
 
         public void Save(Window window) => throw new NotImplementedException();
 
-        public void TypeAlertDefinition(AlertEnum alert)
+        public void WindowDataFilling(AlertEnum alert, string message)
         {
+            Message = message;
+
             switch (alert)
             {
                 case AlertEnum.None:
